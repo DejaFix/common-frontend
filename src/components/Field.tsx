@@ -1,43 +1,31 @@
-import {
-  useId,
-  type InputHTMLAttributes,
-  type ReactNode,
-  type SelectHTMLAttributes,
-  type TextareaHTMLAttributes,
-} from 'react'
+import { useId, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes } from 'react'
 import { cx } from '../lib/cx'
 
 export interface FieldProps {
   label: ReactNode
-  hint?: ReactNode
-  /** 있으면 빨간 글씨로 표시하고 입력칸에 aria-invalid를 붙인다 */
+  /** 있으면 입력칸 아래 빨간 글씨(.form-error)로 표시하고 aria-invalid를 붙인다 */
   error?: ReactNode
-  /** id 등을 받아 입력칸에 붙이는 함수. 라벨·도움말·오류가 입력칸과 연결된다. */
+  /** id 등을 받아 입력칸에 붙이는 함수 */
   children: (control: { id: string; 'aria-describedby'?: string; 'aria-invalid'?: true }) => ReactNode
   className?: string
 }
 
-/** 라벨 + 입력칸 + 도움말/오류 (DejaFix 로그인 화면 .field). 안의 input·select·textarea는 42px 높이로 맞춰진다. */
-export function Field({ label, hint, error, children, className }: FieldProps) {
+/** 라벨 + 입력칸. DejaFix 로그인 화면 마크업: label.field (글 + input), 오류는 p.form-error */
+export function Field({ label, error, children, className }: FieldProps) {
   const id = useId()
-  const hintId = `${id}-hint`
   const errId = `${id}-err`
-  const describedBy = [hint && hintId, error && errId].filter(Boolean).join(' ') || undefined
   return (
-    <div className={cx('field', className)}>
-      <label htmlFor={id}>{label}</label>
-      {children({ id, 'aria-describedby': describedBy, 'aria-invalid': error ? true : undefined })}
-      {hint && (
-        <span className="field-hint" id={hintId}>
-          {hint}
-        </span>
-      )}
+    <>
+      <label className={cx('field', className)} htmlFor={id}>
+        {label}
+        {children({ id, 'aria-describedby': error ? errId : undefined, 'aria-invalid': error ? true : undefined })}
+      </label>
       {error && (
-        <span className="form-error" id={errId} role="alert">
+        <p role="alert" className="form-error" id={errId}>
           {error}
-        </span>
+        </p>
       )}
-    </div>
+    </>
   )
 }
 
@@ -46,16 +34,11 @@ export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
   return <input {...props} />
 }
 
-/** Field 안에서 쓰는 여러 줄 입력칸 */
-export function Textarea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return <textarea {...props} />
-}
-
 export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   options: { value: string; label: string }[]
 }
 
-/** 고르기 상자. 단독으로 쓰면 DejaFix 표 위 필터용 32px, Field 안에서는 42px */
+/** 고르기 상자 (DejaFix .select, 32px) */
 export function Select({ options, className, ...rest }: SelectProps) {
   return (
     <select className={cx('select', className)} {...rest}>
@@ -71,30 +54,22 @@ export function Select({ options, className, ...rest }: SelectProps) {
 export interface SwitchProps {
   checked: boolean
   onChange: (next: boolean) => void
-  /** 스위치 옆 글자. 없으면 ariaLabel을 꼭 넣는다 */
-  label?: ReactNode
-  ariaLabel?: string
+  /** 스크린리더용 이름 (예: '알림 켜기'). 꼭 넣는다 */
+  ariaLabel: string
   disabled?: boolean
 }
 
-/** 켜기/끄기 스위치 (role="switch") */
-export function Switch({ checked, onChange, label, ariaLabel, disabled }: SwitchProps) {
-  const btn = (
+/** 켜기/끄기 스위치. DejaFix 마크업: button.switch[role=switch][aria-checked] */
+export function Switch({ checked, onChange, ariaLabel, disabled }: SwitchProps) {
+  return (
     <button
       type="button"
       role="switch"
       className="switch"
       aria-checked={checked}
-      aria-label={label ? undefined : ariaLabel}
+      aria-label={ariaLabel}
       disabled={disabled}
       onClick={() => onChange(!checked)}
     />
-  )
-  if (!label) return btn
-  return (
-    <label className="switch-label">
-      {btn}
-      {label}
-    </label>
   )
 }

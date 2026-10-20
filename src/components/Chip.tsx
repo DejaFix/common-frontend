@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
 import { cx } from '../lib/cx'
 
-/** neutral·green·amber는 DejaFix 원본 이름. red·blue는 DejaFix riskhigh·info와 같은 색의 범용 이름 */
-export type ChipTone = 'neutral' | 'green' | 'amber' | 'red' | 'blue'
+/** DejaFix의 범용 칩 색 3종 (.chip.neutral / .green / .amber) */
+export type ChipTone = 'neutral' | 'green' | 'amber'
 
 export interface ChipProps {
   tone?: ChipTone
@@ -19,11 +19,7 @@ export function Chip({ tone = 'neutral', title, className, children }: ChipProps
   )
 }
 
-/** 칩 여러 개를 줄바꿈 가능하게 묶는다 */
-export function Chips({ children, label }: { children: ReactNode; label?: string }) {
-  return (
-    <span className="chips" role={label ? 'group' : undefined} aria-label={label}>
-      {children}
-    </span>
-  )
+/** 칩 여러 개를 줄바꿈 가능하게 묶는다 (.chips) */
+export function Chips({ children }: { children: ReactNode }) {
+  return <span className="chips">{children}</span>
 }

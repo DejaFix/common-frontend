@@ -2,19 +2,16 @@ import type { ReactNode } from 'react'
 
 export interface EmptyStateProps {
   title: ReactNode
-  /** 왜 비었는지, 무엇을 하면 되는지 */
-  children?: ReactNode
-  /** 다음 행동 버튼 */
+  /** 제목 아래 버튼·링크 (DejaFix: '현황으로 돌아가기' .btn 링크) */
   action?: ReactNode
 }
 
-/** 목록·검색 결과가 비었을 때 (DejaFix .empty) */
-export function EmptyState({ title, children, action }: EmptyStateProps) {
+/** 비었거나 찾을 수 없을 때 (DejaFix .empty > h2 + 버튼) */
+export function EmptyState({ title, action }: EmptyStateProps) {
   return (
     <div className="empty">
       <h2>{title}</h2>
-      {children && <p>{children}</p>}
-      {action && <div className="empty-action">{action}</div>}
+      {action}
     </div>
   )
 }

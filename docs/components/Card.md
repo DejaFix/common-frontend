@@ -1,38 +1,47 @@
 # Card
-제목 줄(제목, 보조 글, 오른쪽 버튼)이 있는 카드. onClick을 주면 카드 전체가 버튼이 된다.
+
+제목 줄이 있는 카드. `onClick`을 주면 카드 전체가 버튼이 된다.
 
 ## Props
-| 이름 | 타입 | 기본값 | 설명 |
-|---|---|---|---|
-| title | ReactNode | - | `h2.card-title` |
-| sub | ReactNode | - | `span.card-sub` |
-| actions | ReactNode | - | `.card-actions` (제목 줄 오른쪽) |
-| onClick | () => void | - | 있으면 `<button class="card">`. 이때 actions 안에 버튼을 넣지 않는다 |
-| as | `'div' \| 'section' \| 'article'` | `'div'` | 태그 |
-| className | string | - | 추가 클래스 |
+
+| 이름      | 타입                              | 기본값  | 설명                                |
+| --------- | --------------------------------- | ------- | ----------------------------------- |
+| title     | ReactNode                         | -       | 제목 (`h2.card-title`)              |
+| sub       | ReactNode                         | -       | 제목 옆 작은 글씨 (`span.card-sub`) |
+| onClick   | () => void                        | -       | 주면 `button.card`로 그려진다       |
+| as        | `'div' \| 'section' \| 'article'` | `'div'` | 바깥 태그                           |
+| className | string                            | -       | 추가 클래스                         |
+| children  | ReactNode                         | -       | 본문                                |
+
+title과 sub가 모두 없으면 제목 줄(`.card-head`)을 그리지 않는다.
 
 ## 사용 예시
-```tsx
-import { Card, Button } from '@dejafix/common-frontend'
 
-<Card title="최근 항목" sub="10건" actions={<Button size="small">더 보기</Button>}>
-  내용
+```tsx
+import { Card } from '@dejafix/common-frontend'
+
+<Card title="발송 내역" sub="최근 24시간" as="section">
+  본문
 </Card>
+<Card title="상세 보기" onClick={() => navigate('/detail')}>눌러서 이동</Card>
 ```
+
 React 없이:
+
 ```html
-<div class="card">
+<section class="card">
   <div class="card-head">
-    <h2 class="card-title">최근 항목</h2>
-    <span class="card-sub">10건</span>
-    <div class="card-actions"><button class="btn small">더 보기</button></div>
+    <h2 class="card-title">발송 내역</h2>
+    <span class="card-sub">최근 24시간</span>
   </div>
-  내용
-</div>
+  본문
+</section>
 ```
 
 ## 의존성
+
 React, `styles.css` (global.css, theme.css)
 
 ## 원본 프로젝트
-DejaFix, aiprj
+
+DejaFix

@@ -26,15 +26,15 @@ export function SearchBox({
   const ref = useRef<HTMLInputElement>(null)
   useHotkey('k', () => ref.current?.focus(), hotkey)
   return (
-    <label className="search" role="search">
+    <label className="search">
       <Icon name="search" size={16} />
       <input
         ref={ref}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={(e) => {
+          // DejaFix 대비 예외: 한글 입력(조합) 중 Enter는 글자 확정이므로 검색하지 않는다
           if (e.key === 'Enter' && value.trim() && !e.nativeEvent.isComposing) onSubmit?.(value.trim())
-          if (e.key === 'Escape') ref.current?.blur()
         }}
         placeholder={placeholder}
         aria-label={ariaLabel}

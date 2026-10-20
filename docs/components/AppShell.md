@@ -1,49 +1,60 @@
 # AppShell
-화면 뼈대: 어두운 사이드바(접기) + 상단바 + 본문 + 오른쪽 패널. 900px 이하에서는 사이드바 대신 가로 메뉴가 나온다. ToastProvider 안에 있으면 상단바에 알림 자리를 자동으로 둔다.
+
+어두운 사이드바(접기) + 상단바 + 본문 + 오른쪽 패널로 이루어진 화면 뼈대.
 
 ## Props
-| 이름 | 타입 | 기본값 | 설명 |
-|---|---|---|---|
-| brand | `{ name: string; logoSrc?: string; logo?: ReactNode }` | 필수 | 로고(32x32 이미지 또는 직접 그린 노드)와 이름 |
-| nav | `NavItem[]` | 필수 | `{ href, label, icon?, active?, badge?, soon? }` |
-| renderLink | LinkRenderer | `defaultLink` (`<a>`) | 라우터 링크로 바꿀 때 |
-| topbarLead | ReactNode | - | 상단바 왼쪽 칸 (남는 폭 차지) |
-| topbar | ReactNode | - | 상단바 오른쪽 요소들 (SegmentedControl, SearchBox, UserMenu, IconButton, Button) |
-| sidebarFooter | ReactNode | - | 사이드바 맨 아래 글 |
-| panel | `{ open, title, sub?, onClose, children, footer? }` | - | 오른쪽 `.assistant` 패널. open이면 본문이 왼쪽으로 밀림 |
-| storageKey | string | - | 사이드바 접힘을 기억할 localStorage 키. 비우면 기억 안 함 |
-| banner | ReactNode | - | 상단바 아래 전역 안내 띠 (Notice 등) |
-| children | ReactNode | 필수 | 본문 |
+
+| 이름       | 타입                                                | 기본값                     | 설명                                                                                   |
+| ---------- | --------------------------------------------------- | -------------------------- | -------------------------------------------------------------------------------------- |
+| brand      | `{ name: string; logoSrc: string }`                 | 필수                       | 사이드바 위쪽 로고(32x32 이미지, `img.brand-logo`)와 이름. DejaFix처럼 이미지만 받는다 |
+| nav        | `NavItem[]`                                         | 필수                       | 메뉴. `{ href, label, icon?, active?, badge?, soon? }`                                 |
+| renderLink | `LinkRenderer`                                      | `defaultLink` (`<a href>`) | 라우터 링크로 바꿀 때 사용. `({ item, className, children }) => ReactNode`             |
+| topbar     | ReactNode                                           | -                          | 상단바 안 요소들. 순서대로 놓인다                                                      |
+| panel      | `{ open, title, sub?, onClose, children, footer? }` | -                          | 오른쪽에서 밀고 들어오는 패널. open이면 본문이 왼쪽으로 밀린다                         |
+| storageKey | string                                              | -                          | 사이드바 접힘 상태를 기억할 localStorage 키. 비우면 기억하지 않음                      |
+| banner     | ReactNode                                           | -                          | 상단바 아래 전역 안내 띠                                                               |
+| children   | ReactNode                                           | 필수                       | 본문                                                                                   |
+
+- 알림(Toast)은 자동으로 놓이지 않는다. `topbar` 안 원하는 자리에 `<ToastOutlet />`을 둔다.
+- 상단바에서 남는 폭을 채울 요소에는 `style={{ flex: 1, minWidth: 0 }}`를 준다.
+- 900px 이하에서는 사이드바 대신 가로 메뉴(`nav.mobile-nav`)가 나온다.
+- 테마는 `<html data-theme="light|dark">`로 강제한다. 속성이 없으면 OS 설정을 따른다.
 
 ## 사용 예시
+
 ```tsx
-import { Link, useLocation } from 'react-router-dom'
-import { AppShell, ToastProvider, Button, IconButton, UserMenu } from '@dejafix/common-frontend'
+import { AppShell, ToastOutlet, SearchBox, UserMenu, IconButton, Button, type NavItem } from '@dejafix/common-frontend'
 
-const { pathname } = useLocation()
-const [panel, setPanel] = useState(false)
+const nav: NavItem[] = [
+  { href: '#/home', label: '현황', icon: 'dashboard', active: true, badge: 5 },
+  { href: '#/rules', label: '알림 규칙', icon: 'bell' },
+  { href: '#/soon', label: '관리', icon: 'admin', soon: true },
+]
 
-<ToastProvider>
-  <AppShell
-    brand={{ name: 'Common', logoSrc: '/logo.svg' }}
-    nav={[{ href: '/', label: '현황', icon: 'dashboard', active: pathname === '/', badge: 5 }]}
-    renderLink={({ item, className, children }) => <Link to={item.href} className={className}>{children}</Link>}
-    storageKey="app.sidebar"
-    topbarLead={<span className="topbar-time">확인 10-20 13:05</span>}
-    topbar={<>
+<AppShell
+  brand={{ name: 'Common', logoSrc: '/logo-mark.png' }}
+  nav={nav}
+  storageKey="app.sidebar"
+  topbar={
+    <>
+      <span style={{ flex: 1, minWidth: 0 }}>확인 10-20 13:05</span>
+      <ToastOutlet />
+      <SearchBox value={q} onChange={setQ} />
       <UserMenu name="홍길동" role="관리자" items={[{ label: '로그아웃', onSelect: logout }]} />
-      <IconButton icon="bell" label="알림" dot />
+      <IconButton href="#/rules" icon="bell" label="알림" dot />
       <Button variant="dark" icon="sparkle" onClick={() => setPanel(true)}>도우미</Button>
-    </>}
-    panel={{ open: panel, title: '도우미', sub: '무엇이든 물어보세요', onClose: () => setPanel(false), children: <p>내용</p> }}
-  >
-    {page}
-  </AppShell>
-</ToastProvider>
+    </>
+  }
+  panel={{ open: panel, title: '도우미', sub: '설명', onClose: () => setPanel(false), children: <p>내용</p> }}
+>
+  {page}
+</AppShell>
 ```
 
 ## 의존성
-React, Icon, Toast(ToastOutlet), nav 타입, `styles.css` (shell.css, global.css)
+
+React, Icon, `styles.css` (global.css, shell.css). `useToast`/`ToastOutlet`을 쓰려면 바깥에 ToastProvider가 필요하다.
 
 ## 원본 프로젝트
+
 DejaFix

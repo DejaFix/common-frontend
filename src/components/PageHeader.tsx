@@ -1,5 +1,4 @@
 import { Fragment, type ReactNode } from 'react'
-import { cx } from '../lib/cx'
 
 export interface Crumb {
   label: string
@@ -11,43 +10,26 @@ export interface PageHeaderProps {
   sub?: ReactNode
   /** 제목 위 경로. 마지막 항목은 현재 페이지 */
   crumbs?: Crumb[]
-  /** 제목 오른쪽 버튼 영역 */
-  actions?: ReactNode
 }
 
-/** 페이지 제목 줄 (DejaFix .crumb + .page-head > .page-title + .page-sub) */
-export function PageHeader({ title, sub, crumbs, actions }: PageHeaderProps) {
-  const text = (
-    <div>
-      <h1 className="page-title">{title}</h1>
-      {sub && <p className="page-sub">{sub}</p>}
-    </div>
-  )
+/** 페이지 제목 줄. DejaFix 마크업: div.crumb (링크 / 현재) + .page-head > h1.page-title + p.page-sub */
+export function PageHeader({ title, sub, crumbs }: PageHeaderProps) {
   return (
     <>
       {crumbs && crumbs.length > 0 && (
-        <nav className="crumb" aria-label="경로">
+        <div className="crumb">
           {crumbs.map((c, i) => (
             <Fragment key={`${c.label}-${i}`}>
               {i > 0 && ' / '}
-              {c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
+              {c.href ? <a href={c.href}>{c.label}</a> : c.label}
             </Fragment>
           ))}
-        </nav>
+        </div>
       )}
-      <header className={cx('page-head', actions ? 'with-actions' : undefined)}>
-        {actions ? (
-          <>
-            {text}
-            <div className="page-actions">{actions}</div>
-          </>
-        ) : (
-          <>
-            <h1 className="page-title">{title}</h1>
-            {sub && <p className="page-sub">{sub}</p>}
-          </>
-        )}
-      </header>
+      <div className="page-head">
+        <h1 className="page-title">{title}</h1>
+        {sub && <p className="page-sub">{sub}</p>}
+      </div>
     </>
   )
 }

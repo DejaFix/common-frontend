@@ -11,13 +11,12 @@ export interface UserMenuProps {
   name: string
   /** 이름 위 작은 글씨 (역할·소속) */
   role?: string
-  avatarUrl?: string
   /** 펼친 메뉴의 버튼들 (DejaFix: 로그아웃 하나) */
   items: UserMenuItem[]
 }
 
 /** 상단바 오른쪽 사용자 칸: 역할(작게) 위에 이름, 누르면 메뉴. 1280px 이하에서는 아바타만 보인다. */
-export function UserMenu({ name, role, avatarUrl, items }: UserMenuProps) {
+export function UserMenu({ name, role, items }: UserMenuProps) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const close = useCallback(() => setOpen(false), [])
@@ -30,11 +29,10 @@ export function UserMenu({ name, role, avatarUrl, items }: UserMenuProps) {
         className="usermenu-btn"
         aria-expanded={open}
         aria-haspopup="menu"
-        aria-label={`${name} 메뉴`}
         onClick={() => setOpen((v) => !v)}
       >
         <span className="user-avatar" aria-hidden="true">
-          {avatarUrl ? <img src={avatarUrl} alt="" /> : <Icon name="user" size={18} />}
+          <Icon name="user" size={18} />
         </span>
         <span className="user-text">
           {role && <small>{role}</small>}

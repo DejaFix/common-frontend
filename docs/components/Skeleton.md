@@ -1,30 +1,37 @@
 # Skeleton
-불러오는 중 자리 표시. 스크린리더에는 "불러오는 중"으로 읽힌다.
+
+불러오는 중 자리 표시 (움직이는 회색 상자).
 
 ## Props
-| 이름 | 타입 | 기본값 | 설명 |
-|---|---|---|---|
-| variant | `'block' \| 'line'` | `'block'` | block은 `.skeleton`, line은 `.skeleton-lines > .skeleton-line` |
-| lines | number | 3 | line일 때 줄 수 (마지막 줄은 60%) |
-| height | number | CSS 기본값 | block 높이(px) |
+
+| 이름   | 타입   | 기본값 | 설명                             |
+| ------ | ------ | ------ | -------------------------------- |
+| height | number | 120    | 높이 px (`.skeleton` 기본 120px) |
+
+상자 하나만 그린다.
+
+**DejaFix 대비 예외:** `aria-label="불러오는 중"`. 빈 상자만으로는 스크린리더가 아무것도 읽지 않아 이름을 붙인다. 화면 모양은 DejaFix와 같다.
 
 ## 사용 예시
+
 ```tsx
 import { Skeleton } from '@dejafix/common-frontend'
 
-{loading ? <Skeleton height={160} /> : <Content />}
-{loading && <Skeleton variant="line" lines={4} />}
+{
+  loading ? <Skeleton height={60} /> : <Content />
+}
 ```
+
 React 없이:
+
 ```html
-<div class="skeleton" role="status" aria-label="불러오는 중"></div>
-<div class="skeleton-lines" role="status" aria-label="불러오는 중">
-  <span class="skeleton-line"></span><span class="skeleton-line" style="width:60%"></span>
-</div>
+<div class="skeleton" aria-label="불러오는 중" style="height:60px"></div>
 ```
 
 ## 의존성
-React, `styles.css` (global.css)
+
+React, `styles.css` (global.css, 색은 theme.css의 `--skeleton-a`, `--skeleton-b`)
 
 ## 원본 프로젝트
+
 DejaFix

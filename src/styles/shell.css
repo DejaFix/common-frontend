@@ -1,5 +1,5 @@
 /* 사이드바·헤더 구조: 어두운 사이드바(접기 버튼 포함), 헤더에 사용자·알림.
-   원본: DejaFix frontend/src/styles/shell.css (값 그대로, 도메인 전용 상황 요약 줄·연결 상태 목록 제외).
+   원본: DejaFix/DejaFix (GitHub dev) frontend/src/styles/shell.css (값 그대로, 도메인 전용 상황 요약 줄·연결 상태 목록 제외).
    사이드바 색은 아래 변수 몇 개로 바꾼다. */
 :root {
   --side-bg: #1d1d3a;
@@ -86,11 +86,6 @@
   background: var(--side-line);
   color: var(--side-muted);
 }
-.sidebar .sidebar-foot {
-  padding: 12px 18px 4px;
-  border-top: 1px solid var(--side-line);
-  color: var(--side-muted);
-}
 
 /* 접힌 사이드바: 아이콘만 */
 .shell.collapsed {
@@ -99,8 +94,7 @@
 .shell.collapsed .brand-name,
 .shell.collapsed .brand-logo,
 .shell.collapsed .nav-label,
-.shell.collapsed .nav-soon,
-.shell.collapsed .sidebar-foot {
+.shell.collapsed .nav-soon {
   display: none;
 }
 .shell.collapsed .side-top {
@@ -153,15 +147,10 @@
   height: 36px;
   display: grid;
   place-items: center;
-  overflow: hidden;
   background: var(--primary);
   color: #fff;
 }
-.user-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+
 .user-text {
   display: flex;
   flex-direction: column;
@@ -186,8 +175,6 @@
   z-index: 40;
   min-width: 140px;
   padding: 6px;
-  display: grid; /* 메뉴가 여러 개일 때 세로로 쌓는다 */
-  gap: 4px;
   background: var(--surface);
   border: 1px solid var(--border-strong);
   box-shadow: var(--shadow-md);
@@ -203,9 +190,6 @@
   height: 38px;
   display: grid;
   place-items: center;
-  border: 0;
-  background: transparent;
-  padding: 0;
   color: var(--text-2);
 }
 .bell:hover {
@@ -236,72 +220,5 @@
   .main.panel-open .page.page-wide {
     padding-left: 16px;
     padding-right: 16px;
-  }
-}
-
-/* ---------- [aiprj] TopNav: 사이드바 없는 가로 메뉴형 헤더 ---------- */
-.topnav {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  height: var(--topbar-h);
-  padding: 0 32px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border-strong);
-}
-.topnav .brand-name {
-  color: var(--text);
-}
-.topnav-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.topnav-links {
-  display: flex;
-  gap: 4px;
-  margin-left: auto;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.topnav-links::-webkit-scrollbar {
-  display: none;
-}
-.topnav-links a {
-  padding: 8px 12px;
-  color: var(--text-2);
-  font-weight: 600;
-  font-size: 14px;
-  white-space: nowrap;
-}
-.topnav-links a:hover {
-  background: var(--hover);
-}
-.topnav-links a.active {
-  background: var(--primary);
-  color: var(--on-primary-ink, var(--on-primary));
-}
-.topnav-end {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-@media (max-width: 700px) {
-  .topnav {
-    height: auto;
-    flex-wrap: wrap;
-    gap: 4px 16px;
-    padding: 10px 16px;
-  }
-  .topnav-links {
-    order: 3;
-    margin-left: 0;
-    width: 100%;
-  }
-  .topnav-end {
-    margin-left: auto;
   }
 }
