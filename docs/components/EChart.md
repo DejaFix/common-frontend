@@ -1,36 +1,44 @@
 # EChart
-ECharts 래퍼. 상자 크기가 바뀌면 따라 줄고 는다. echarts가 필요해 따로 불러온다. 막대·히트맵·선·원 차트만 등록되어 있다.
+
+ECharts 래퍼. 상자 크기가 바뀌면 따라 줄고 늘며, 선·막대·히트맵만 등록되어 있다 (DejaFix와 같음).
 
 ## Props
-| 이름 | 타입 | 기본값 | 설명 |
-|---|---|---|---|
-| option | EChartsCoreOption | 필수 | 부르는 쪽에서 `useMemo`로 고정해 넘긴다. 바뀌면 차트를 다시 만든다 |
-| tall | boolean | false | 높이 360px (기본 260px, 클래스 `chart tall`) |
-| ariaLabel | string | - | 차트 요약 한 줄 |
 
-보조: `chartTheme()`는 `{ text, grid, series[4], font }`를 현재 테마 색으로 돌려준다. 색은 `cssVar('--series-1')`처럼 토큰에서 읽고, `useThemeVersion()`을 useMemo 의존성에 넣어 라이트/다크 전환 때 다시 읽게 한다.
+| 이름   | 타입              | 기본값 | 설명                                                                                     |
+| ------ | ----------------- | ------ | ---------------------------------------------------------------------------------------- |
+| option | EChartsCoreOption | 필수   | ECharts 옵션. 호출하는 쪽에서 `useMemo`로 고정해 넘긴다 (바뀔 때마다 차트를 다시 만든다) |
+| tall   | boolean           | false  | 높이 360px (`.chart.tall`). 기본은 260px                                                 |
+
+차트 색은 토큰에서 읽는다: `cssVar('--series-1')` ~ `--series-4`, `--chart-text`, `--chart-grid`. 라이트/다크가 바뀌면 `useThemeVersion()` 값이 올라가므로 `useMemo` 의존성에 넣어 색을 다시 읽게 한다.
 
 ## 사용 예시
+
 ```tsx
 import { useMemo } from 'react'
-import { useThemeVersion } from '@dejafix/common-frontend'
-import { EChart, chartTheme } from '@dejafix/common-frontend/charts'
+import { cssVar, useThemeVersion } from '@dejafix/common-frontend'
+import { EChart } from '@dejafix/common-frontend/charts'
 
-const v = useThemeVersion()
+const theme = useThemeVersion()
 const option = useMemo(() => {
-  const t = chartTheme()
+  void theme
+  const grid = cssVar('--chart-grid')
   return {
-    color: t.series,
-    xAxis: { type: 'category', data: ['월', '화', '수'] },
-    yAxis: { type: 'value' },
-    series: [{ type: 'line', data: [3, 5, 2] }],
+    color: [cssVar('--series-1'), cssVar('--series-2')],
+    textStyle: { color: cssVar('--chart-text') },
+    tooltip: { trigger: 'axis' },
+    xAxis: { type: 'category', data: ['월', '화', '수'], axisLine: { lineStyle: { color: grid } } },
+    yAxis: { type: 'value', splitLine: { lineStyle: { color: grid } } },
+    series: [{ type: 'line', data: [12, 18, 15] }, { type: 'bar', data: [5, 8, 6] }],
   }
-}, [v])
-<EChart option={option} ariaLabel="요일별 건수" />
+}, [theme])
+
+<EChart option={option} />
 ```
 
 ## 의존성
-React, echarts, useThemeVersion, cssVar, `styles.css` (global.css의 `.chart`)
+
+React, echarts (`@dejafix/common-frontend/charts`로 따로 불러온다), hooks/useThemeVersion, lib/cssVar, `styles.css` (global.css의 `.chart`, tokens.css의 색 변수)
 
 ## 원본 프로젝트
+
 DejaFix

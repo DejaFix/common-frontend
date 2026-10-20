@@ -22,7 +22,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   )
 }
 
-/** 알림이 보일 자리. AppShell은 상단바 안에 자동으로 둔다 (DejaFix: 상단바의 작은 앰버 알약). */
+/** 알림이 보일 자리. 상단바 안 원하는 위치에 둔다 (DejaFix: 시간대 전환 옆의 작은 앰버 알약 .toast). */
 export function ToastOutlet() {
   const message = useContext(ToastMessageContext)
   return (

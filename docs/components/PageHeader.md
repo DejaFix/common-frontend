@@ -1,28 +1,31 @@
 # PageHeader
-경로(crumb)와 페이지 제목 줄.
+
+페이지 제목 줄. 필요하면 위에 경로(crumb)를 붙인다.
 
 ## Props
-| 이름 | 타입 | 기본값 | 설명 |
-|---|---|---|---|
-| title | ReactNode | 필수 | `h1.page-title` |
-| sub | ReactNode | - | `p.page-sub` |
-| crumbs | `{ label: string; href?: string }[]` | - | `nav.crumb`, 항목 사이에 `' / '`. href 없는 항목(마지막)은 현재 페이지 |
-| actions | ReactNode | - | 있으면 `.page-head.with-actions` 안 `.page-actions`(오른쪽) |
+
+| 이름   | 타입                                 | 기본값 | 설명                                                                      |
+| ------ | ------------------------------------ | ------ | ------------------------------------------------------------------------- |
+| title  | ReactNode                            | 필수   | 제목 (`h1.page-title`)                                                    |
+| sub    | ReactNode                            | -      | 제목 아래 설명 (`p.page-sub`)                                             |
+| crumbs | `{ label: string; href?: string }[]` | -      | 제목 위 경로. `div.crumb` 안에 ' / '로 이어지고 마지막 항목은 현재 페이지 |
 
 ## 사용 예시
-```tsx
-import { PageHeader, Button } from '@dejafix/common-frontend'
 
-<PageHeader
-  crumbs={[{ label: '홈', href: '/' }, { label: '규칙' }]}
-  title="규칙"
-  sub="알림 조건을 관리합니다"
-  actions={<Button variant="primary" icon="plus">새 규칙</Button>}
+```tsx
+import { PageHeader } from '@dejafix/common-frontend'
+
+;<PageHeader
+  title="컴포넌트"
+  sub="템플릿에 들어 있는 기본 요소 모음."
+  crumbs={[{ label: '현황', href: '#/home' }, { label: '컴포넌트' }]}
 />
 ```
 
 ## 의존성
-React, `styles.css` (global.css)
+
+React, `styles.css` (global.css의 `.crumb`, `.page-head`)
 
 ## 원본 프로젝트
-DejaFix, aiprj
+
+DejaFix

@@ -1,10 +1,9 @@
 import type { ReactNode } from 'react'
 import { cx } from '../lib/cx'
-import { UnknownValue } from './UnknownValue'
 
 export interface StatCardProps {
   label: ReactNode
-  /** null·undefined면 '확인할 수 없음'으로 표시한다 (0으로 바꾸지 않는다) */
+  /** null·undefined면 '확인 불가'로 표시한다 (0으로 바꾸지 않는다) */
   value: ReactNode | null | undefined
   /** 숫자 뒤 작은 글씨 (건, 대, % …) */
   unit?: string
@@ -25,7 +24,7 @@ export function StatCard({ label, value, unit, hint, dot, onClick, className }: 
         {label}
       </div>
       <div className="kpi-value">
-        {known ? value : <UnknownValue />}
+        {known ? value : <span className="card-sub">확인 불가</span>}
         {known && unit && <small>{unit}</small>}
       </div>
       {hint && <div className="kpi-hint">{hint}</div>}
