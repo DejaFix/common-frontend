@@ -3,6 +3,7 @@
 여러 프로젝트에서 반복해 쓰던 UI 컴포넌트와 디자인 규칙을 모은 **프론트엔드 공용 템플릿**.
 유일한 출처는 [DejaFix/DejaFix](https://github.com/DejaFix/DejaFix) 프론트엔드(GitHub `dev` 브랜치)다. 디자인(인디고 팔레트, 어두운 사이드바, 각진 모양)과 클래스·마크업을 그대로 옮겼다.
 DejaFix에 없는 것은 Modal과 Vite 데모 페이지뿐이다(출처 "신규").
+`main`이 아니라 `dev`를 기준으로 한 이유: 지금 디자인(인디고 테마·어두운 사이드바, DejaFix PR #177·#178)이 DejaFix `dev`에만 머지되어 있고 `main`에는 아직 없다.
 디자인 토큰(CSS 변수), 순수 CSS 클래스, React + TypeScript 컴포넌트로 되어 있다.
 
 - 컴포넌트 문서: [docs/components/](docs/components/README.md)
@@ -28,12 +29,96 @@ npm run build     # 데모 빌드 (tsc + vite build)
 npm run format    # prettier
 ```
 
+### 새 프로젝트에서 5분 안에 띄우기
+
+1. Vite 프로젝트를 만든다.
+
+   ```bash
+   npm create vite@latest my-app -- --template react-ts
+   cd my-app
+   npm install
+   ```
+
+2. 템플릿을 설치한다(버전 태그를 붙인다).
+
+   ```bash
+   npm install github:DejaFix/common-frontend#v0.1.0
+   ```
+
+3. `src/main.tsx`에서 Vite 기본 CSS(`import './index.css'`)를 지우고 템플릿 CSS를 불러온다. `src/App.css`도 쓰지 않는다.
+
+   ```tsx
+   import { StrictMode } from 'react'
+   import { createRoot } from 'react-dom/client'
+   import '@dejafix/common-frontend/styles.css'
+   import { ToastProvider } from '@dejafix/common-frontend'
+   import App from './App'
+
+   createRoot(document.getElementById('root')!).render(
+     <StrictMode>
+       <ToastProvider>
+         <App />
+       </ToastProvider>
+     </StrictMode>,
+   )
+   ```
+
+4. `index.html`의 `<head>`에 Pretendard 글꼴을 넣는다.
+
+   ```html
+   <link
+     rel="stylesheet"
+     href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+   />
+   ```
+
+5. `src/App.tsx`를 AppShell 최소 예시로 바꾸고 `npm run dev`로 띄운다.
+
+   ```tsx
+   import { AppShell, Card, PageHeader, StatCard, ToastOutlet, UserMenu, useToast } from '@dejafix/common-frontend'
+
+   export default function App() {
+     const toast = useToast()
+     return (
+       <AppShell
+         brand={{ name: 'My App', logoSrc: '/vite.svg' }}
+         nav={[
+           { href: '/', label: '현황', icon: 'dashboard', active: true },
+           { href: '/reports', label: '리포트', icon: 'report' },
+         ]}
+         topbar={
+           <>
+             <span style={{ flex: 1 }} />
+             <ToastOutlet />
+             <UserMenu
+               name="홍길동"
+               role="관리자"
+               items={[{ label: '로그아웃', onSelect: () => toast.show('로그아웃') }]}
+             />
+           </>
+         }
+       >
+         <div className="page">
+           <PageHeader title="현황" sub="첫 화면" />
+           <div className="grid kpi">
+             <StatCard label="열린 항목" value={5} unit="건" dot="var(--accent)" />
+             <StatCard label="평균 처리 시간" value={null} dot="var(--warning)" />
+           </div>
+           <Card title="시작하기">common-frontend가 연결되었습니다.</Card>
+         </div>
+       </AppShell>
+     )
+   }
+   ```
+
+색·라운드를 바꾸려면 [docs/tokens.md의 '다른 프로젝트에서 색·라운드를 바꾸는 법'](docs/tokens.md#다른-프로젝트에서-색라운드를-바꾸는-법)을 본다.
+
 ### 다른 프로젝트에서 쓰기
 
-방법 A — git 의존성 (Vite + TS 프로젝트):
+방법 A — git 의존성 (Vite + TS 프로젝트). 버전 태그를 붙여 설치한다(태그 목록: [Releases](https://github.com/DejaFix/common-frontend/releases)):
 
 ```bash
-npm install github:DejaFix/common-frontend
+npm install github:DejaFix/common-frontend#v0.1.0
 ```
 
 ```tsx

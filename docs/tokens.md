@@ -45,6 +45,32 @@
 | 아무것도 안 함                         | OS 설정(prefers-color-scheme)을 따름 |
 | `<html data-theme="light">` / `"dark"` | 강제 전환                            |
 
+## 다른 프로젝트에서 색·라운드를 바꾸는 법
+
+템플릿 CSS(`styles.css`) **다음에** 불러오는 CSS 파일에서 아래 토큰만 다시 정의한다. 템플릿 파일은 고치지 않는다.
+
+| 바꿀 것           | 토큰                                                                                         |
+| ----------------- | -------------------------------------------------------------------------------------------- |
+| 주요색            | `--primary`, `--primary-hover`, `--primary-soft` (+ 다크에서 그 위 글자 `--on-primary`)      |
+| 주요색 위 흰 글자 | `--on-primary-ink` (활성 메뉴·강조 버튼·세그먼트 선택)                                       |
+| 사이드바          | `--side-bg` (필요하면 `--side-text`, `--side-muted`, `--side-line`)                          |
+| 라운드            | `--radius-sm`, `--radius-md`, `--radius-lg`, `--radius-pill`, `--radius-round` (기본 모두 0) |
+| 글꼴              | `--font`                                                                                     |
+
+<!-- prettier-ignore -->
+```css
+/* src/my-theme.css — main.tsx에서 styles.css 다음에 import */
+:root {
+  --primary: #0f766e; --primary-hover: #115e59; --primary-soft: #ccfbf1;
+  --side-bg: #12302e;
+  --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px; --radius-pill: 999px; --radius-round: 50%;
+}
+:root[data-theme='dark'] { --primary: #2dd4bf; --primary-hover: #5eead4; --on-primary: #042f2e; }
+```
+
+- 라이트 값은 `:root`, 다크 값은 `:root[data-theme='dark']`에 쓴다. OS 다크 설정도 따르게 하려면 같은 다크 값을 `@media (prefers-color-scheme: dark) { :root:not([data-theme='light']) { … } }`에도 넣는다.
+- 바꾼 색은 라이트·다크 모두에서 글자 대비를 확인한다.
+
 ## 반응형 기준
 
 | 폭       | 바뀌는 것                                                                |
