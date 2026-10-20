@@ -5,10 +5,8 @@ import { defaultLink, type LinkRenderer, type NavItem } from './nav'
 
 export interface Brand {
   name: string
-  /** 32x32 로고 이미지 주소 (img.brand-logo) */
-  logoSrc?: string
-  /** 이미지 대신 직접 그린 로고 */
-  logo?: ReactNode
+  /** 32x32 로고 이미지 주소 (img.brand-logo, DejaFix: /logo-mark.png) */
+  logoSrc: string
 }
 
 export interface SidePanel {
@@ -87,11 +85,7 @@ export function AppShell({
           >
             <Icon name="menu" size={20} />
           </button>
-          {brand.logoSrc ? (
-            <img className="brand-logo" src={brand.logoSrc} alt="" width={32} height={32} />
-          ) : brand.logo ? (
-            <span className="brand-logo">{brand.logo}</span>
-          ) : null}
+          <img className="brand-logo" src={brand.logoSrc} alt="" width={32} height={32} />
           <span className="brand-name">{brand.name}</span>
         </div>
         {nav.map((item) => (
