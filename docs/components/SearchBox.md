@@ -13,7 +13,7 @@
 | hotkey      | boolean                   | true     | Ctrl/Cmd+K 포커스와 `Kbd` 표시. 한 화면에 하나만 켠다        |
 | ariaLabel   | string                    | `'검색'` | 스크린리더용 이름                                            |
 
-Esc를 누르면 포커스가 빠진다.
+**DejaFix 대비 예외:** 한글을 입력하는 중(글자 조합 중)에 누른 Enter는 글자 확정이므로 검색하지 않는다. DejaFix에서는 조합 중 Enter로 검색이 먼저 실행되는 경우가 있어 유지한다.
 
 ## 사용 예시
 

@@ -56,13 +56,6 @@ function usePage(): Page {
   return page
 }
 
-const logo = (
-  <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
-    <rect width="32" height="32" fill="var(--primary)" />
-    <path d="M9 21l4-9 3 6 2-4 5 7" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinejoin="round" />
-  </svg>
-)
-
 export function App() {
   const page = usePage()
   const toast = useToast()
@@ -85,7 +78,7 @@ export function App() {
 
   return (
     <AppShell
-      brand={{ name: 'Common', logo }}
+      brand={{ name: 'Common', logoSrc: '/logo-mark.svg' }}
       nav={nav}
       storageKey="common-frontend.demo.sidebar"
       topbar={
@@ -236,16 +229,10 @@ function Home() {
         <StatCard label="평균 처리 시간" value={null} hint="값이 없으면 0 대신 '확인 불가'" dot="var(--warning)" />
       </div>
       <Card title="지금 확인할 항목" sub="누르면 상세 화면으로 이동" as="section">
-        <Collapsible
-          title="새로 들어온 항목"
-          count={3}
-          countUnit="건"
-          meta="최근 24시간 안에 시작 — 지금 생긴 문제"
-          defaultOpen
-        >
+        <Collapsible title="새로 들어온 항목" count={3} meta="최근 24시간 안에 시작 — 지금 생긴 문제" defaultOpen>
           <ItemRows items={newItems} />
         </Collapsible>
-        <Collapsible title="오래 열린 항목" count={2} countUnit="건" meta="24시간 넘게 열려 있음">
+        <Collapsible title="오래 열린 항목" count={2} meta="24시간 넘게 열려 있음">
           <ItemRows items={oldItems} />
         </Collapsible>
       </Card>
@@ -435,7 +422,7 @@ function Components() {
           }
         >
           <ProgressBar label="web-01" value={42} />
-          <ProgressBar label="api-02" value={87} color="var(--danger)" />
+          <ProgressBar label="api-02" value={87} />
           <ProgressBar label="batch-03" value={null} />
           <div style={{ marginTop: 16 }}>
             <Skeleton height={60} />

@@ -15,7 +15,7 @@ export function SegmentedControl<T extends string>({ options, value, onChange, a
           key={o.value}
           type="button"
           className={o.value === value ? 'on' : undefined}
-          aria-pressed={o.value === value}
+          aria-pressed={o.value === value} // DejaFix 대비 예외: 선택 상태를 스크린리더에 알림
           onClick={() => onChange(o.value)}
         >
           {o.label}

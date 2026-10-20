@@ -4,10 +4,8 @@ import { Icon } from './Icon'
 
 export interface CollapsibleProps {
   title: ReactNode
-  /** 제목 옆 개수 (굵게) */
+  /** 제목 옆 개수. DejaFix처럼 'N건'으로 표시한다 */
   count?: number
-  /** 개수 뒤 단위 (예: '건') */
-  countUnit?: string
   /** 제목 옆 흐린 설명 */
   meta?: ReactNode
   defaultOpen?: boolean
@@ -16,15 +14,7 @@ export interface CollapsibleProps {
 }
 
 /** 눌러서 펼치고 접는 구역 (DejaFix 현황 화면의 목록 묶음) */
-export function Collapsible({
-  title,
-  count,
-  countUnit = '',
-  meta,
-  defaultOpen = false,
-  id,
-  children,
-}: CollapsibleProps) {
+export function Collapsible({ title, count, meta, defaultOpen = false, id, children }: CollapsibleProps) {
   const [open, setOpen] = useState(defaultOpen)
   const bodyId = useId()
   return (
@@ -34,18 +24,13 @@ export function Collapsible({
         className="collapsible-head"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        aria-controls={bodyId}
+        aria-controls={bodyId} // DejaFix 대비 예외: 펼치는 영역과 버튼을 스크린리더에 연결
       >
         <span className="chev">
           <Icon name="chevron" size={16} />
         </span>
         <span className="collapsible-title">{title}</span>
-        {count !== undefined && (
-          <span className="collapsible-title">
-            {count}
-            {countUnit}
-          </span>
-        )}
+        {count !== undefined && <span className="collapsible-title">{count}건</span>}
         {meta && <span className="collapsible-meta">{meta}</span>}
       </button>
       {open && <div id={bodyId}>{children}</div>}
