@@ -1,0 +1,2 @@
+# 모든 텍스트 파일을 LF로 저장·체크아웃한다 (Windows core.autocrlf 설정과 무관하게 prettier 검사가 통과하도록)
+* text=auto eol=lf

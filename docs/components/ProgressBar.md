@@ -3,6 +3,8 @@
 이름 / 막대 / 값을 한 줄로 보여준다. 막대 색은 `var(--primary)`, 오른쪽 값은 퍼센트로 고정이다.
 색이나 단위를 바꿔야 하면 DejaFix처럼 `.bar-row` 마크업을 직접 쓴다.
 
+**기본값 출처:** 막대 색(`var(--primary)`)과 퍼센트 표시는 DejaFix에 없는 값으로, 템플릿을 만들 때 Claude가 정했다. DejaFix는 화면마다 막대 색(`style.background`)과 값 글자를 직접 지정한다.
+
 ## Props
 
 | 이름  | 타입                          | 기본값 | 설명                                                                                                   |
