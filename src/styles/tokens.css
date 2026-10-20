@@ -1,4 +1,4 @@
-/* 디자인 토큰. 원본: DejaFix frontend/src/styles/tokens.css (값 그대로).
+/* 디자인 토큰. 원본: DejaFix/DejaFix (GitHub dev) frontend/src/styles/tokens.css (값 그대로).
    라이트가 기본이고, 다크는 같은 이름의 토큰을 다시 정의한다.
    인디고 색·각진 모양은 theme.css가 이 위에 덮어쓴다(DejaFix와 같은 순서).
 
@@ -70,22 +70,6 @@
   --radius-pill: 999px; /* 알약 모양 */
   --radius-round: 50%; /* 원 (점, 스위치 손잡이) */
   --overlay: rgba(10, 14, 13, 0.45); /* Modal 배경 (신규) */
-  --on-danger: #ffffff; /* 위험 버튼 글자 (신규) */
-
-  /* 참고용 별칭: DejaFix CSS에 숫자로 쓰인 값을 모아 이름만 붙였다. 컴포넌트 CSS는 원본처럼 숫자를 그대로 쓴다.
-     새 화면을 만들 때 같은 값을 고르는 용도. */
-  --text-xs: 12px;
-  --text-sm: 13px;
-  --text-md: 15px; /* 본문 */
-  --text-lg: 17px; /* 카드 제목 */
-  --text-xl: 28px; /* 페이지 제목 */
-  --text-display: 40px; /* KPI 숫자 */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 28px; /* 페이지 좌우 여백 */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -130,7 +114,6 @@
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.55);
     --overlay: rgba(0, 0, 0, 0.6);
-    --on-danger: #0e1312;
     color-scheme: dark;
   }
 }
@@ -176,6 +159,5 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.55);
   --overlay: rgba(0, 0, 0, 0.6);
-  --on-danger: #0e1312;
   color-scheme: dark;
 }

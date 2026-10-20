@@ -1,6 +1,6 @@
-/* 기본 요소와 컴포넌트. 원본: DejaFix frontend/src/styles/global.css (값 그대로, 도메인 전용 규칙 제외).
+/* 기본 요소와 컴포넌트. 원본: DejaFix/DejaFix (GitHub dev) frontend/src/styles/global.css — 값 그대로, 도메인 전용 규칙 제외.
    모서리 값은 토큰(--radius-*)으로 바꿔 두었다. theme.css가 토큰을 0으로 만들어 DejaFix와 같은 각진 모양이 된다.
-   [aiprj] 표시: DejaFix에 없어 aiprj에서 보충. [신규] 표시: 두 프로젝트 모두에 없어 새로 만듦. */
+   [신규] 표시: DejaFix에 없어 새로 만든 것 (Modal만). */
 * {
   box-sizing: border-box;
 }
@@ -17,8 +17,6 @@ body {
   font-size: 15px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  /* [aiprj] 한국어 어절 단위 줄바꿈 */
-  word-break: keep-all;
 }
 h1,
 h2,
@@ -43,43 +41,6 @@ code,
 :focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
-}
-
-/* 건너뛰기 링크로 본문에 포커스가 와도 본문 전체에 테두리를 그리지 않는다 */
-#main-content:focus {
-  outline: none;
-}
-/* [aiprj] 키보드 사용자용 '본문으로 건너뛰기' 링크 */
-.skip-link {
-  position: absolute;
-  left: -999px;
-  top: 0;
-  z-index: 100;
-  padding: 8px 16px;
-  background: var(--text);
-  color: var(--bg);
-}
-.skip-link:focus {
-  left: 16px;
-  top: 16px;
-}
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
-/* [aiprj] 움직임 줄이기 설정을 따른다 */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
 }
 
 /* ---------- 레이아웃 ---------- */
@@ -134,6 +95,8 @@ code,
   font-size: 11px;
   padding: 1px 7px;
   border-radius: var(--radius-pill);
+  background: var(--bg-muted, rgba(128, 128, 128, 0.15));
+  color: var(--text-muted, inherit);
 }
 .sidebar-foot {
   margin-top: auto;
@@ -163,16 +126,7 @@ code,
   backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid var(--border);
 }
-/* 상단바 왼쪽 칸: 남는 폭을 차지한다 (DejaFix에서는 현재 상황 요약 줄이 이 자리) */
-.topbar-lead {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex: 1 1 auto;
-  min-width: 0;
-  font-size: 14px;
-  color: var(--text-2);
-}
+
 .topbar-time {
   font-size: 13px;
   color: var(--text-3);
@@ -288,22 +242,7 @@ code,
 .page-head {
   margin-bottom: 20px;
 }
-/* [신규] 제목 오른쪽 버튼 영역이 있을 때 */
-.page-head.with-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 12px;
-}
-.page-head.with-actions > :first-child {
-  flex: 1 1 280px;
-  min-width: 0;
-}
-.page-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
+
 .page-title {
   font-size: 28px;
   line-height: 1.2;
@@ -351,12 +290,7 @@ code,
   font-size: 13px;
   color: var(--text-3);
 }
-/* [신규] 카드 제목 줄 오른쪽 버튼 */
-.card-actions {
-  margin-left: auto;
-  display: flex;
-  gap: 8px;
-}
+
 .grid {
   display: grid;
   gap: 16px;
@@ -421,12 +355,7 @@ code,
   margin-left: 4px;
   letter-spacing: 0;
 }
-/* [신규] 값이 없을 때는 큰 숫자 자리에 작게 표시 */
-.kpi-value .unknown {
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: 0;
-}
+
 .kpi-hint {
   font-size: 12px;
   color: var(--text-3);
@@ -465,15 +394,6 @@ button.card {
 .chip.amber {
   background: var(--accent-soft);
   color: var(--accent);
-}
-/* DejaFix .chip.riskhigh / .chip.info 와 같은 색, 범용 이름 */
-.chip.red {
-  background: var(--danger-soft);
-  color: var(--danger);
-}
-.chip.blue {
-  background: var(--info-soft);
-  color: var(--info);
 }
 
 .collapsible {
@@ -589,10 +509,7 @@ button.card {
   height: 100%;
   border-radius: var(--radius-pill);
 }
-.bar-value {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
+
 .legend {
   display: flex;
   gap: 14px;
@@ -623,34 +540,6 @@ button.card {
   background: var(--accent-soft);
   color: var(--accent);
 }
-/* [aiprj] 성공·실패 안내 (aiprj .note.ok / .note.bad) */
-.note.ok {
-  background: var(--success-soft);
-  color: var(--success);
-}
-.note.bad {
-  background: var(--danger-soft);
-  color: var(--danger);
-}
-.note svg {
-  flex: none;
-  margin-top: 1px;
-}
-.note-body {
-  flex: 1;
-  min-width: 0;
-}
-.note-close {
-  border: 0;
-  background: transparent;
-  color: inherit;
-  padding: 0;
-  display: inline-grid;
-  opacity: 0.7;
-}
-.note-close:hover {
-  opacity: 1;
-}
 
 /* 목록 (DejaFix 알림 규칙 목록) */
 .list {
@@ -671,10 +560,7 @@ button.card {
 a.list-row:hover {
   background: var(--surface-2);
 }
-.list-main {
-  flex: 1;
-  min-width: 0;
-}
+
 .list-title {
   font-weight: 600;
 }
@@ -711,10 +597,7 @@ a.list-row:hover {
   padding: 16px 18px 12px;
   gap: 8px;
 }
-.assistant-head > :first-child {
-  flex: 1;
-  min-width: 0;
-}
+
 .assistant-title {
   font-weight: 700;
   font-size: 16px;
@@ -753,46 +636,14 @@ a.list-row:hover {
   padding: 0 12px;
   font: inherit;
 }
-/* [신규] input과 같은 모양을 select·textarea에도, 다크에서도 읽히게 면색·글자색 지정 */
-.field input,
-.field select,
-.field textarea {
-  background: var(--surface);
-  color: var(--text);
-}
-.field select {
-  height: 42px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm);
-  padding: 0 8px;
-  font: inherit;
-}
-.field textarea {
-  min-height: 96px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm);
-  padding: 10px 12px;
-  font: inherit;
-  resize: vertical;
-}
-.field [aria-invalid='true'] {
-  border-color: var(--danger);
-}
-.field-hint {
-  font-weight: 400;
-  font-size: 12px;
-  color: var(--text-3);
-}
+
 .form-error {
   margin-top: 12px;
   font-size: 13px;
   font-weight: 600;
   color: var(--danger);
 }
-.field .form-error {
-  margin-top: 0;
-  font-size: 12px;
-}
+
 .select {
   height: 32px;
   border: 1px solid var(--border-strong);
@@ -832,18 +683,7 @@ a.list-row:hover {
 .switch[aria-checked='true']::after {
   transform: translateX(18px);
 }
-.switch:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-.switch-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-2);
-}
+
 .save-bar {
   display: flex;
   gap: 8px;
@@ -872,9 +712,7 @@ a.list-row:hover {
   font-size: 20px;
   margin-bottom: 8px;
 }
-.empty-action {
-  margin-top: 16px;
-}
+
 .skeleton {
   height: 120px;
   border-radius: var(--radius-lg);
@@ -894,10 +732,7 @@ a.list-row:hover {
   border-radius: var(--radius-sm);
   background: linear-gradient(90deg, var(--skeleton-a), var(--skeleton-b), var(--skeleton-a));
 }
-.skeleton-lines .skeleton-line {
-  display: block;
-  margin-top: 8px;
-}
+
 .chart {
   width: 100%;
   height: 260px;
@@ -940,18 +775,7 @@ table.data th.num {
 table.data tr.hl td {
   background: var(--surface-2);
 }
-/* [신규] 눌러서 이동하는 행, 빈 표 */
-table.data tr.clickable {
-  cursor: pointer;
-}
-table.data tr.clickable:hover td {
-  background: var(--surface-2);
-}
-table.data td.table-empty {
-  text-align: center;
-  color: var(--text-3);
-  padding: 32px 12px;
-}
+
 .cell-bad {
   color: var(--danger);
   font-weight: 700;
@@ -977,10 +801,8 @@ table.data td.table-empty {
   place-items: center;
   width: 20px;
   height: 20px;
-  padding: 0;
   border-radius: var(--radius-round);
   border: 1px solid var(--border-strong);
-  background: transparent;
   color: var(--text-3);
   font-size: 12px;
   font-weight: 700;
@@ -993,7 +815,6 @@ table.data td.table-empty {
   left: 0;
   z-index: 30;
   width: 300px;
-  max-width: 80vw;
   padding: 10px 12px;
   border-radius: var(--radius-sm);
   background: var(--text);
@@ -1001,18 +822,13 @@ table.data td.table-empty {
   font-size: 12.5px;
   font-weight: 450;
   line-height: 1.5;
-  text-align: left;
-  /* DejaFix는 opacity로 숨겼지만, 숨은 말풍선이 좁은 화면에서 가로 스크롤을 만들어 display로 숨긴다 */
-  display: none;
+  opacity: 0;
   pointer-events: none;
-}
-.info-tip.right::after {
-  left: auto;
-  right: 0;
+  transition: opacity 0.12s;
 }
 .info-tip:hover::after,
-.info-tip:focus-visible::after {
-  display: block;
+.info-tip:focus::after {
+  opacity: 1;
 }
 
 /* ---------- [신규] Modal (기본 <dialog>) — 사용자 메뉴 팝업과 같은 면·그림자 ---------- */

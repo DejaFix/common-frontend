@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import type { IconName } from './Icon'
 
-/** AppShell·TopNav 메뉴 한 칸 */
+/** AppShell 메뉴 한 칸 */
 export interface NavItem {
   href: string
   label: string
