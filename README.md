@@ -6,6 +6,7 @@
 
 - 컴포넌트 문서: [docs/components/](docs/components/README.md)
 - 토큰 문서: [docs/tokens.md](docs/tokens.md)
+- 한 장 요약(Notion 원본): [docs/notion-summary.md](docs/notion-summary.md)
 - 팀 지침서 사본: [docs/DejaFix-common-guidelines.md](docs/DejaFix-common-guidelines.md)
 
 ## 1. 역할
