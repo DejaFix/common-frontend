@@ -10,7 +10,8 @@ export interface ProgressBarProps {
 
 const pct = (v: number, max: number) => (max > 0 ? Math.round((Math.min(Math.max(v, 0), max) / max) * 100) : 0)
 
-/** 이름 | 막대 | 값 한 줄. DejaFix 마크업: .bar-row > span + .bar-track > .bar-fill + span */
+/** 이름 | 막대 | 값 한 줄. DejaFix 마크업: .bar-row > span + .bar-track > .bar-fill + span
+    막대 색 var(--primary)와 퍼센트 표시는 DejaFix에 없는 기본값으로, 템플릿 작성 시 Claude가 정했다. */
 export function ProgressBar({ label, value, max = 100 }: ProgressBarProps) {
   const known = typeof value === 'number' && Number.isFinite(value)
   return (
