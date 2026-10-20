@@ -21,6 +21,7 @@
 - 접근성: 아이콘만 있는 버튼·링크와 스위치는 이름(`label`·`ariaLabel`)을 꼭 받는다.
 - 컴포넌트를 추가·변경하면 `docs/components/<이름>.md`(이름·용도·props/예시·의존성·원본 프로젝트)와 `docs/components/README.md` 표, `src/index.ts` export, `demo/App.tsx` 예시를 같이 고친다.
 - 클래스·토큰·props 이름 변경은 쓰는 프로젝트를 깨뜨리므로 PR 본문에 "호환성 깨짐"으로 적는다.
+- 버전: `src/`·스타일 변경을 `main`에 반영할 때마다 `package.json` version을 올리고(호환성 깨짐이면 부 버전 0.x.0, 아니면 수 버전 0.x.y) 그 `main` 커밋에 `vX.Y.Z` 태그와 GitHub Release를 만들며, README 설치 예시의 태그도 함께 바꾼다. 문서만 바뀐 반영은 태그를 올리지 않는다.
 
 ## 검사 (PR 머지 조건)
 
