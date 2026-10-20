@@ -1,14 +1,13 @@
 # EChart
 
-ECharts 래퍼. 상자 크기가 바뀌면 따라 줄고 늘며, 선·막대·히트맵·파이만 등록되어 있다.
+ECharts 래퍼. 상자 크기가 바뀌면 따라 줄고 늘며, 선·막대·히트맵만 등록되어 있다 (DejaFix와 같음).
 
 ## Props
 
-| 이름      | 타입              | 기본값 | 설명                                                                                     |
-| --------- | ----------------- | ------ | ---------------------------------------------------------------------------------------- |
-| option    | EChartsCoreOption | 필수   | ECharts 옵션. 호출하는 쪽에서 `useMemo`로 고정해 넘긴다 (바뀔 때마다 차트를 다시 만든다) |
-| tall      | boolean           | false  | 높이 360px (`.chart.tall`). 기본은 260px                                                 |
-| ariaLabel | string            | -      | 스크린리더용 차트 요약 한 줄                                                             |
+| 이름   | 타입              | 기본값 | 설명                                                                                     |
+| ------ | ----------------- | ------ | ---------------------------------------------------------------------------------------- |
+| option | EChartsCoreOption | 필수   | ECharts 옵션. 호출하는 쪽에서 `useMemo`로 고정해 넘긴다 (바뀔 때마다 차트를 다시 만든다) |
+| tall   | boolean           | false  | 높이 360px (`.chart.tall`). 기본은 260px                                                 |
 
 차트 색은 토큰에서 읽는다: `cssVar('--series-1')` ~ `--series-4`, `--chart-text`, `--chart-grid`. 라이트/다크가 바뀌면 `useThemeVersion()` 값이 올라가므로 `useMemo` 의존성에 넣어 색을 다시 읽게 한다.
 
@@ -33,7 +32,7 @@ const option = useMemo(() => {
   }
 }, [theme])
 
-<EChart option={option} ariaLabel="요일별 처리 건수" />
+<EChart option={option} />
 ```
 
 ## 의존성

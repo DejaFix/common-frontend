@@ -36,7 +36,7 @@ React 프로젝트는 `styles.css`와 컴포넌트를 불러 쓰고, React가 �
 | Chip              | 상태·분류 라벨                                   | [Chip.md](https://github.com/DejaFix/common-frontend/blob/main/docs/components/Chip.md)                         |
 | Card              | 제목 줄이 있는 카드                              | [Card.md](https://github.com/DejaFix/common-frontend/blob/main/docs/components/Card.md)                         |
 | StatCard          | 숫자 하나를 크게 보여주는 KPI 카드               | [StatCard.md](https://github.com/DejaFix/common-frontend/blob/main/docs/components/StatCard.md)                 |
-| Field             | 라벨·입력칸·도움말·오류, Input/Select/Switch     | [Field.md](https://github.com/DejaFix/common-frontend/blob/main/docs/components/Field.md)                       |
+| Field             | 라벨·입력칸·오류, Input/Select/Switch            | [Field.md](https://github.com/DejaFix/common-frontend/blob/main/docs/components/Field.md)                       |
 | SegmentedControl  | 2~4개 중 하나 고르기                             | [SegmentedControl.md](https://github.com/DejaFix/common-frontend/blob/main/docs/components/SegmentedControl.md) |
 | Collapsible       | 펼치고 접는 구역                                 | [Collapsible.md](https://github.com/DejaFix/common-frontend/blob/main/docs/components/Collapsible.md)           |
 | Icon              | 선 아이콘                                        | [Icon.md](https://github.com/DejaFix/common-frontend/blob/main/docs/components/Icon.md)                         |

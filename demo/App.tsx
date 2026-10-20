@@ -442,7 +442,7 @@ function Components() {
           </div>
         </Card>
         <Card title="EChart" sub="토큰 색을 따라 라이트/다크 전환">
-          <EChart option={option} ariaLabel="요일별 처리 건수" />
+          <EChart option={option} />
         </Card>
         <Card>
           <EmptyState
